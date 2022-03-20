@@ -17,7 +17,7 @@ public class PhoneBook {
     }
 
     public PhoneBook() {
-        Map<String, List<String>> phonebook = new HashMap<>();
+        Map<String, List<String>> phonebook = new LinkedHashMap<>();
         this.phonebook = phonebook;
     }
 
@@ -36,22 +36,40 @@ public class PhoneBook {
     }
 
     public void remove(String name) {
+        phonebook.remove(name);
     }
 
     public Boolean hasEntry(String name) {
-        return null;
+        return phonebook.containsKey(name);
     }
 
     public List<String> lookup(String name) {
-        return null;
+        return phonebook.get(name);
     }
 
-    public String reverseLookup(String phoneNumber)  {
-        return null;
+    public String reverseLookup(String phoneNumber)  { // TODO - figure this one out
+        String returnName = "";
+        List<String> completeContactList = getAllContactNames();
+        for (int x = 0; x < completeContactList.size(); x++) {
+            String currentName = completeContactList.get(x);
+            List<String> currentNumberList = phonebook.get(currentName);
+            if (currentNumberList.contains(phoneNumber)) {
+                returnName = currentName;
+            }
+        }
+        return returnName;
     }
 
     public List<String> getAllContactNames() {
-        return null;
+        Set<String> phonebookKeySet = phonebook.keySet();
+        Object[] intermediate = phonebookKeySet.toArray();
+        List<String> contactList = new ArrayList<>();
+        for (int m = 0; m < intermediate.length; m++) {
+            Object object = intermediate[m];
+            String string = object.toString();
+            contactList.add(string);
+        }
+        return contactList;
     }
 
     public Map<String, List<String>> getMap() {
